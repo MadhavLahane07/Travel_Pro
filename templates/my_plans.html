@@ -1,0 +1,187 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="my-plans-page" style="background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80') center/cover fixed; min-height: 100vh; padding: 120px 0 80px;">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-5">
+            <div>
+                <h1 class="display-4 text-white fw-bold mb-2">My Travel Plans</h1>
+                <p class="lead text-white-50 mb-0">Manage and organize your upcoming adventures</p>
+            </div>
+            <a href="{{ url_for('create_plan') }}" class="btn btn-primary btn-lg">
+                <i class="fas fa-plus me-2"></i>Create New Plan
+            </a>
+        </div>
+
+        {% if travel_plans %}
+            <div class="row g-4">
+                {% for plan in travel_plans %}
+                    <div class="col-md-6">
+                        <div class="card h-100 shadow-lg border-0 plan-card">
+                            <div class="card-body p-4">
+                                <div class="d-flex justify-content-between align-items-start mb-4">
+                                    <div>
+                                        <h3 class="card-title fw-bold mb-2">{{ plan.title }}</h3>
+                                        <div class="text-muted">
+                                            <i class="far fa-calendar-alt me-2"></i>
+                                            {{ plan.start_date.strftime('%B %d, %Y') }} - {{ plan.end_date.strftime('%B %d, %Y') }}
+                                        </div>
+                                    </div>
+                                    <div class="dropdown">
+                                        <button class="btn btn-link text-dark p-0" type="button" data-bs-toggle="dropdown">
+                                            <i class="fas fa-ellipsis-v"></i>
+                                        </button>
+                                        <ul class="dropdown-menu dropdown-menu-end">
+                                            <li>
+                                                <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#editPlanModal{{ plan.id }}">
+                                                    <i class="fas fa-edit me-2"></i>Edit Plan
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item text-danger" href="#" data-bs-toggle="modal" data-bs-target="#deletePlanModal{{ plan.id }}">
+                                                    <i class="fas fa-trash me-2"></i>Delete Plan
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                {% if plan.description %}
+                                    <p class="card-text text-muted mb-4">{{ plan.description }}</p>
+                                {% endif %}
+                                
+                                {% if plan.destinations %}
+                                    <h5 class="fw-bold mb-3">Destinations</h5>
+                                    <div class="destinations-list">
+                                        {% for dest in plan.destinations %}
+                                            <div class="destination-item p-3 mb-3 bg-light rounded-3">
+                                                <div class="d-flex justify-content-between align-items-start">
+                                                    <div>
+                                                        <h6 class="mb-1">{{ dest.destination.name }}</h6>
+                                                        {% if dest.visit_date %}
+                                                            <small class="text-muted">
+                                                                <i class="far fa-calendar me-1"></i>
+                                                                Visit Date: {{ dest.visit_date.strftime('%B %d, %Y') }}
+                                                            </small>
+                                                        {% endif %}
+                                                        {% if dest.notes %}
+                                                            <p class="mb-0 mt-2">{{ dest.notes }}</p>
+                                                        {% endif %}
+                                                    </div>
+                                                    <div class="dropdown">
+                                                        <button class="btn btn-link text-dark p-0" type="button" data-bs-toggle="dropdown">
+                                                            <i class="fas fa-ellipsis-v"></i>
+                                                        </button>
+                                                        <ul class="dropdown-menu dropdown-menu-end">
+                                                            <li><a class="dropdown-item" href="#"><i class="fas fa-edit me-2"></i>Edit</a></li>
+                                                            <li><a class="dropdown-item" href="#"><i class="fas fa-trash me-2"></i>Remove</a></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                {% else %}
+                                    <div class="text-center py-4">
+                                        <i class="fas fa-map-marker-alt fa-3x text-muted mb-3"></i>
+                                        <p class="text-muted mb-0">No destinations added yet</p>
+                                    </div>
+                                {% endif %}
+
+                                <div class="mt-4">
+                                    <a href="{{ url_for('destinations') }}" class="btn btn-outline-primary w-100">
+                                        <i class="fas fa-plus me-2"></i>Add Destinations
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Delete Plan Modal -->
+                    <div class="modal fade" id="deletePlanModal{{ plan.id }}" tabindex="-1" aria-labelledby="deletePlanModalLabel{{ plan.id }}" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header border-0">
+                                    <h5 class="modal-title" id="deletePlanModalLabel{{ plan.id }}">
+                                        <i class="fas fa-exclamation-triangle text-danger me-2"></i>Delete Travel Plan
+                                    </h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Are you sure you want to delete "{{ plan.title }}"? This action cannot be undone.</p>
+                                    <p class="text-muted">All destinations associated with this plan will also be removed.</p>
+                                </div>
+                                <div class="modal-footer border-0">
+                                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+                                    <form action="{{ url_for('delete_plan', plan_id=plan.id) }}" method="POST" class="d-inline">
+                                        <button type="submit" class="btn btn-danger">
+                                            <i class="fas fa-trash me-2"></i>Delete Plan
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="text-center py-5">
+                <div class="card shadow-lg border-0 mx-auto" style="max-width: 500px;">
+                    <div class="card-body p-5">
+                        <i class="fas fa-map fa-4x text-primary mb-4"></i>
+                        <h3 class="fw-bold mb-3">No Travel Plans Yet</h3>
+                        <p class="text-muted mb-4">Start planning your next adventure by creating a new travel plan.</p>
+                        <a href="{{ url_for('create_plan') }}" class="btn btn-primary btn-lg">
+                            <i class="fas fa-plus me-2"></i>Create Your First Plan
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<style>
+.my-plans-page {
+    margin-top: -76px;
+}
+.plan-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 15px;
+}
+.plan-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.2) !important;
+}
+.destination-item {
+    transition: all 0.3s ease;
+}
+.destination-item:hover {
+    background-color: #f8f9fa !important;
+    transform: translateX(5px);
+}
+.btn-primary {
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+}
+.btn-outline-primary {
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+}
+.dropdown-menu {
+    border: none;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    border-radius: 10px;
+    padding: 0.5rem;
+}
+.dropdown-item {
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+}
+.dropdown-item:hover {
+    background-color: #f8f9fa;
+}
+</style>
+{% endblock %} 

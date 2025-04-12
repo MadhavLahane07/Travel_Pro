@@ -1,0 +1,169 @@
+{%- extends "base.html" -%}
+
+{%- block content -%}
+<!-- Contact Hero Section -->
+<section class="contact-hero" style="background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1423666639041-f56000c27a9a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2074&q=80') center/cover; height: 50vh; display: flex; align-items: center; margin-top: 76px;">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8 text-center text-white">
+                <h1 class="display-4 fw-bold mb-4">Contact TravelPro</h1>
+                <p class="lead mb-0">We're here to help plan your next adventure</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Info Cards -->
+<section class="contact-info py-5">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="contact-card text-center p-4 bg-white rounded-3 shadow-sm h-100">
+                    <div class="contact-icon bg-primary text-white rounded-circle p-3 mx-auto mb-4" style="width: 60px; height: 60px;">
+                        <i class="fas fa-map-marker-alt fa-2x"></i>
+                    </div>
+                    <h4 class="mb-3">Visit Us</h4>
+                    <p class="text-muted mb-0">123 Travel Street<br>Wanderlust Tower, 5th Floor<br>Adventure City, AC 12345</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="contact-card text-center p-4 bg-white rounded-3 shadow-sm h-100">
+                    <div class="contact-icon bg-primary text-white rounded-circle p-3 mx-auto mb-4" style="width: 60px; height: 60px;">
+                        <i class="fas fa-phone fa-2x"></i>
+                    </div>
+                    <h4 class="mb-3">Call Us</h4>
+                    <p class="text-muted mb-2">Toll Free: +1 (800) 123-4567</p>
+                    <p class="text-muted mb-0">International: +1 (123) 456-7890</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="contact-card text-center p-4 bg-white rounded-3 shadow-sm h-100">
+                    <div class="contact-icon bg-primary text-white rounded-circle p-3 mx-auto mb-4" style="width: 60px; height: 60px;">
+                        <i class="fas fa-envelope fa-2x"></i>
+                    </div>
+                    <h4 class="mb-3">Email Us</h4>
+                    <p class="text-muted mb-2">info@travelpro.com</p>
+                    <p class="text-muted mb-0">support@travelpro.com</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Form Section -->
+<section class="contact-form py-5 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 mb-4 mb-lg-0">
+                <img src="https://images.unsplash.com/photo-1534536281715-e28d76689b4d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" 
+                     alt="Contact Us" class="img-fluid rounded-3 shadow-lg">
+            </div>
+            <div class="col-lg-6">
+                <h2 class="section-title mb-4">Send Us a Message</h2>
+                <form class="contact-form needs-validation" novalidate>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="name" placeholder="Your Name" required>
+                                <label for="name">Your Name</label>
+                                <div class="invalid-feedback">Please enter your name.</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input type="email" class="form-control" id="email" placeholder="Your Email" required>
+                                <label for="email">Your Email</label>
+                                <div class="invalid-feedback">Please enter a valid email.</div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="subject" placeholder="Subject" required>
+                                <label for="subject">Subject</label>
+                                <div class="invalid-feedback">Please enter a subject.</div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-floating">
+                                <textarea class="form-control" id="message" placeholder="Your Message" style="height: 150px" required></textarea>
+                                <label for="message">Your Message</label>
+                                <div class="invalid-feedback">Please enter your message.</div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-primary btn-lg w-100">Send Message</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Map Section -->
+<section class="map-section">
+    <div class="container-fluid p-0">
+        <div class="row g-0">
+            <div class="col-12">
+                <div class="map-container" style="height: 400px; background: url('https://images.unsplash.com/photo-1524661135-423995f22d0b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2074&q=80') center/cover;">
+                    <div class="map-overlay d-flex align-items-center justify-content-center" style="background: rgba(0,0,0,0.7); height: 100%;">
+                        <div class="text-center text-white">
+                            <h3 class="mb-4">Visit Our Office</h3>
+                            <p class="lead mb-0">We're located in the heart of Adventure City</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ Section -->
+<section class="faq-section py-5">
+    <div class="container">
+        <h2 class="section-title text-center mb-5">Frequently Asked Questions</h2>
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="accordion" id="faqAccordion">
+                    <div class="accordion-item border-0 mb-3 shadow-sm">
+                        <h3 class="accordion-header">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                                How can I book a trip with TravelPro?
+                            </button>
+                        </h3>
+                        <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body text-muted">
+                                You can book a trip through our website by browsing our destinations and selecting your preferred package. Alternatively, you can contact our travel experts directly for personalized assistance.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item border-0 mb-3 shadow-sm">
+                        <h3 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                                What payment methods do you accept?
+                            </button>
+                        </h3>
+                        <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body text-muted">
+                                We accept all major credit cards, bank transfers, and digital payment methods. All payments are processed securely through our encrypted payment gateway.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item border-0 mb-3 shadow-sm">
+                        <h3 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                                Can I customize my travel package?
+                            </button>
+                        </h3>
+                        <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body text-muted">
+                                Yes! We specialize in creating customized travel experiences. Contact our team, and we'll help you design the perfect itinerary based on your preferences and budget.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{%- endblock -%} 

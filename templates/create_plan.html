@@ -1,0 +1,207 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="create-plan-page" style="background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2073&q=80') center/cover fixed; min-height: 100vh; padding: 120px 0 80px;">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow-lg border-0 create-plan-card">
+                    <div class="card-body p-5">
+                        <div class="text-center mb-5">
+                            <div class="icon-wrapper mb-4">
+                                <i class="fas fa-map-marked-alt"></i>
+                            </div>
+                            <h1 class="display-5 fw-bold mb-2">Create New Travel Plan</h1>
+                            <p class="lead text-muted">Plan your next adventure with us</p>
+                        </div>
+
+                        {% with messages = get_flashed_messages(with_categories=true) %}
+                            {% if messages %}
+                                {% for category, message in messages %}
+                                    <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                                        {{ message }}
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+                        {% endwith %}
+
+                        <form method="POST" class="needs-validation" novalidate>
+                            <div class="form-section mb-4">
+                                <h5 class="form-section-title mb-3">
+                                    <i class="fas fa-info-circle me-2"></i>Basic Information
+                                </h5>
+                                <div class="mb-4">
+                                    <label for="title" class="form-label">Plan Title</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text">
+                                            <i class="fas fa-pencil-alt"></i>
+                                        </span>
+                                        <input type="text" class="form-control" id="title" name="title" required
+                                               placeholder="Enter a title for your travel plan">
+                                    </div>
+                                </div>
+
+                                <div class="mb-4">
+                                    <label for="description" class="form-label">Description</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text">
+                                            <i class="fas fa-align-left"></i>
+                                        </span>
+                                        <textarea class="form-control" id="description" name="description" rows="3"
+                                                  placeholder="Describe your travel plan..."></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-section mb-4">
+                                <h5 class="form-section-title mb-3">
+                                    <i class="fas fa-calendar-alt me-2"></i>Travel Dates
+                                </h5>
+                                <div class="row g-4">
+                                    <div class="col-md-6">
+                                        <label for="start_date" class="form-label">Start Date</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text">
+                                                <i class="fas fa-calendar-alt"></i>
+                                            </span>
+                                            <input type="date" class="form-control" id="start_date" name="start_date" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="end_date" class="form-label">End Date</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text">
+                                                <i class="fas fa-calendar-check"></i>
+                                            </span>
+                                            <input type="date" class="form-control" id="end_date" name="end_date" required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="d-grid gap-3">
+                                <button type="submit" class="btn btn-primary btn-lg">
+                                    <i class="fas fa-plus me-2"></i>Create Plan
+                                </button>
+                                <a href="{{ url_for('my_plans') }}" class="btn btn-outline-secondary btn-lg">
+                                    <i class="fas fa-arrow-left me-2"></i>Back to My Plans
+                                </a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.create-plan-page {
+    margin-top: -76px;
+}
+.create-plan-card {
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.98);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+}
+.icon-wrapper {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto;
+    background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 5px 15px rgba(13, 110, 253, 0.3);
+}
+.icon-wrapper i {
+    font-size: 2.5rem;
+    color: white;
+}
+.form-section {
+    background: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 12px;
+    border: 1px solid #e9ecef;
+}
+.form-section-title {
+    color: #0d6efd;
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+.input-group-text {
+    background: white;
+    border-right: none;
+    border-radius: 8px 0 0 8px;
+}
+.input-group-text i {
+    color: #0d6efd;
+}
+.form-control {
+    border-left: none;
+    border-radius: 0 8px 8px 0;
+    padding: 0.75rem 1rem;
+}
+.form-control:focus {
+    box-shadow: none;
+    border-color: #0d6efd;
+}
+.btn-primary {
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%);
+    border: none;
+    box-shadow: 0 5px 15px rgba(13, 110, 253, 0.3);
+    transition: all 0.3s ease;
+}
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(13, 110, 253, 0.4);
+}
+.btn-outline-secondary {
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+.btn-outline-secondary:hover {
+    transform: translateY(-2px);
+}
+.alert {
+    border-radius: 12px;
+    border: none;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+</style>
+
+<script>
+// Form validation
+(function () {
+    'use strict'
+    var forms = document.querySelectorAll('.needs-validation')
+    Array.prototype.slice.call(forms).forEach(function (form) {
+        form.addEventListener('submit', function (event) {
+            if (!form.checkValidity()) {
+                event.preventDefault()
+                event.stopPropagation()
+            }
+            form.classList.add('was-validated')
+        }, false)
+    })
+})()
+
+// Date validation
+document.getElementById('end_date').addEventListener('change', function() {
+    var startDate = new Date(document.getElementById('start_date').value);
+    var endDate = new Date(this.value);
+    if (endDate < startDate) {
+        alert('End date cannot be before start date');
+        this.value = '';
+    }
+});
+</script>
+{% endblock %} 

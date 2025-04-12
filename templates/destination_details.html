@@ -1,0 +1,251 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="destination-details-page" style="background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('{{ destination.image_url }}') center/cover fixed; min-height: 100vh; padding: 120px 0 80px;">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="card shadow-lg border-0 destination-details-card">
+                    <div class="card-body p-5">
+                        <div class="row g-4">
+                            <div class="col-lg-8">
+                                <div class="destination-header mb-4">
+                                    <h1 class="display-4 fw-bold mb-3">{{ destination.name }}</h1>
+                                    <div class="price-tag mb-4">
+                                        <span class="price">${{ "%.2f"|format(destination.price) }}</span>
+                                        <span class="text-muted">per person</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="destination-image mb-4">
+                                    <img src="{{ destination.image_url }}" class="img-fluid rounded-3" alt="{{ destination.name }}">
+                                </div>
+
+                                <div class="destination-description mb-4">
+                                    <h3 class="h4 mb-3">About This Destination</h3>
+                                    <p class="lead">{{ destination.description }}</p>
+                                </div>
+
+                                <div class="destination-features mb-4">
+                                    <h3 class="h4 mb-3">What's Included</h3>
+                                    <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <div class="feature-item">
+                                                <i class="fas fa-hotel text-primary me-2"></i>
+                                                <span>Luxury Accommodation</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="feature-item">
+                                                <i class="fas fa-utensils text-primary me-2"></i>
+                                                <span>All Meals Included</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="feature-item">
+                                                <i class="fas fa-plane text-primary me-2"></i>
+                                                <span>Round-trip Flights</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="feature-item">
+                                                <i class="fas fa-user-tie text-primary me-2"></i>
+                                                <span>Professional Guide</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="destination-activities mb-4">
+                                    <h3 class="h4 mb-3">Popular Activities</h3>
+                                    <div class="row g-3">
+                                        <div class="col-md-4">
+                                            <div class="activity-card">
+                                                <i class="fas fa-mountain text-primary mb-2"></i>
+                                                <h5>Sightseeing</h5>
+                                                <p>Explore the main attractions and landmarks</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="activity-card">
+                                                <i class="fas fa-camera text-primary mb-2"></i>
+                                                <h5>Photography</h5>
+                                                <p>Capture stunning moments and landscapes</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="activity-card">
+                                                <i class="fas fa-utensils text-primary mb-2"></i>
+                                                <h5>Local Cuisine</h5>
+                                                <p>Taste authentic local dishes</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4">
+                                <div class="booking-sidebar">
+                                    <div class="card shadow-sm border-0">
+                                        <div class="card-body">
+                                            <h4 class="card-title mb-4">Book Your Trip</h4>
+                                            <div class="price-summary mb-4">
+                                                <div class="d-flex justify-content-between mb-2">
+                                                    <span>Package Price</span>
+                                                    <span>${{ "%.2f"|format(destination.price) }}</span>
+                                                </div>
+                                                <div class="d-flex justify-content-between mb-2">
+                                                    <span>Taxes & Fees</span>
+                                                    <span>$199.99</span>
+                                                </div>
+                                                <hr>
+                                                <div class="d-flex justify-content-between">
+                                                    <strong>Total</strong>
+                                                    <strong>${{ "%.2f"|format(destination.price + 199.99) }}</strong>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="d-grid gap-3">
+                                                <a href="{{ url_for('booking', destination_id=destination.id) }}" class="btn btn-primary btn-lg">
+                                                    <i class="fas fa-calendar-check me-2"></i>Book Now
+                                                </a>
+                                                {% if user %}
+                                                <button type="button" class="btn btn-outline-primary btn-lg" data-bs-toggle="modal" data-bs-target="#addToPlanModal">
+                                                    <i class="fas fa-plus me-2"></i>Add to Plan
+                                                </button>
+                                                {% endif %}
+                                                <a href="{{ url_for('destinations') }}" class="btn btn-outline-secondary btn-lg">
+                                                    <i class="fas fa-arrow-left me-2"></i>Back to Destinations
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if user %}
+<!-- Add to Plan Modal -->
+<div class="modal fade" id="addToPlanModal" tabindex="-1" aria-labelledby="addToPlanModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header border-0">
+                <h5 class="modal-title" id="addToPlanModalLabel">
+                    <i class="fas fa-map-marker-alt text-primary me-2"></i>Add to Travel Plan
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="{{ url_for('save_destination', destination_id=destination.id) }}" method="POST">
+                    <div class="mb-3">
+                        <label for="plan_id" class="form-label">Select Travel Plan</label>
+                        <select class="form-select" id="plan_id" name="plan_id" required>
+                            <option value="">Choose a plan...</option>
+                            {% for plan in user.travel_plans %}
+                            <option value="{{ plan.id }}">{{ plan.title }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="visit_date" class="form-label">Visit Date</label>
+                        <input type="date" class="form-control" id="visit_date" name="visit_date" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="notes" class="form-label">Notes</label>
+                        <textarea class="form-control" id="notes" name="notes" rows="3" placeholder="Add any specific notes or preferences..."></textarea>
+                    </div>
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-plus me-2"></i>Add to Plan
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<style>
+.destination-details-page {
+    margin-top: -76px;
+}
+.destination-details-card {
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.98);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+}
+.destination-image img {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+.price-tag {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+}
+.price {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #0d6efd;
+}
+.feature-item {
+    padding: 1rem;
+    background: #f8f9fa;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+.feature-item:hover {
+    background: #e9ecef;
+    transform: translateY(-2px);
+}
+.activity-card {
+    padding: 1.5rem;
+    background: #f8f9fa;
+    border-radius: 15px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+.activity-card:hover {
+    background: #e9ecef;
+    transform: translateY(-5px);
+}
+.activity-card i {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+.booking-sidebar .card {
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.98);
+}
+.btn-primary {
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%);
+    border: none;
+    box-shadow: 0 5px 15px rgba(13, 110, 253, 0.3);
+    transition: all 0.3s ease;
+}
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(13, 110, 253, 0.4);
+}
+</style>
+
+<script>
+// Set minimum date to today for visit date
+document.getElementById('visit_date').min = new Date().toISOString().split('T')[0];
+</script>
+{% endblock %} 
